@@ -1,34 +1,22 @@
-
-# EX 2B Jump Game using Greedy Algorithm.
+# EX 2A Assign Cookies using Greedy Algorithm. 
 ## DATE: 14.10.25
 ## AIM:
-To write a Java program to for given constraints.
-You are given an array of integers. Each number represents the maximum number of steps you can jump forward from that position.
+To Write a Java program for the following Constraints.
+Assume you are an awesome parent and want to give your children some cookies. But, you should give each child at most one cookie.
 
-You start from the first element (index 0). 
-Write a program to find the minimum number of jumps required to reach the last index of the array.
-
-If it is not possible to reach the end, return -1.
+Each child i has a greed factor g[i], which is the minimum size of a cookie that the child will be content with; and each cookie j has a size s[j]. If s[j] >= g[i], we can assign the cookie j to the child i, and the child i will be content. Your goal is to maximise the number of your content children and output the maximum number.
 
 ## Algorithm:
 
-1.Read the number of elements and store them in an array.
+1.Read the number of children and their greed values.
 
-2.Handle base conditions:
+2.Read the number of cookies and their sizes.
 
-  (i)If array length is 1 → 0 jumps.
-  
-  (ii)If the first element is 0 → cannot move → return -1.
+3.Sort both arrays in ascending order.
 
-3.Initialise jumps = 0, end = 0, and farthest = 0.
+4.Use two pointers to match the smallest available cookie to the least greedy child.
 
-4.Traverse the array and at each index update the farthest reachable index.
-
-5.When the current index reaches the end of the current jump range, increase jump count.
-
-6.If at any point farthest reaches or crosses the last index, return the jump count.
-
-7.Print the minimum jumps needed.
+5.Count each successful assignment and print the total. 
 
 ## Program:
 ```
@@ -37,47 +25,41 @@ Program to implement Reverse a String
 Developed by: Poojasree B
 Register Number: 212223040148
 */
-import java.util.Scanner;
+import java.util.*;
 
-public class MinJumpToEnd {
+public class AssignCookies {
+    
+    public static int findContentChildren(int[] g, int[] s) {
+        Arrays.sort(g);
+        Arrays.sort(s);
+        int i = 0, j = 0;
 
-    public static int minimumJumps(int[] array) {
-        int n = array.length;
-        if (n <= 1) return 0;
-        if (array[0] == 0) return -1;
-
-        int jumps = 0, end = 0, farthest = 0;
-
-        for (int i = 0; i < n - 1; i++) {
-            farthest = Math.max(farthest, i + array[i]);
-
-            if (i == end) {
-                jumps++;
-                end = farthest;
-                if (end >= n - 1) return jumps;
-            }
+        while(i < g.length && j < s.length){
+            if(s[j] >= g[i]) i++;
+            j++;
         }
-        return -1;
+        return i;
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        int[] nums = new int[n];
+        int[] g = new int[n];
+        for (int i = 0; i < n; i++) g[i] = sc.nextInt();
 
-        for (int i = 0; i < n; i++) {
-            nums[i] = sc.nextInt();
-        }
+        int m = sc.nextInt();
+        int[] s = new int[m];
+        for (int i = 0; i < m; i++) s[i] = sc.nextInt();
 
-        System.out.println("Minimum jumps to reach last index: " + minimumJumps(nums));
+        System.out.println(findContentChildren(g, s));
     }
 }
 ```
 
 ## Output:
 
-<img width="1056" height="353" alt="517325753-d3dce493-e9dd-42de-8c52-53e2181933a8" src="https://github.com/user-attachments/assets/b560f488-9e9d-4a25-8bcd-f003f14946ef" />
+<img width="1031" height="402" alt="516742204-7d30fdae-b8a4-4b5e-9de6-f28dded1bfae" src="https://github.com/user-attachments/assets/580649fa-a4a7-4ff9-b3ff-a2b1dd146c35" />
 
 
 ## Result:
-The program successfully implemented and the expected output is verified.
+The program successfully print all the numbers from 1 to N. 
